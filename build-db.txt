@@ -1,6 +1,5 @@
-;
-create schema library;
-use library;
+create schema group31_db;
+use group31_db;
 
 CREATE TABLE subscriber
 (
@@ -51,7 +50,7 @@ CREATE TABLE book
   name_of_publisher VARCHAR(255),
   arrival_date varchar(255),
   cover_photo varchar(255),
-  book_description varchar(255),
+  book_description varchar(10000),
   PRIMARY KEY (book_name,author_name)
 );
 
@@ -70,7 +69,7 @@ CREATE TABLE copy_of_book
 CREATE TABLE book_order
 (
   date_of_order DATE NOT NULL,
-  order_status VARCHAR(255) ,
+  order_status SET('not borrowed','borrowed', 'ordered', 'pending'),
   email VARCHAR(255),
   estimated_arrival_date varchar(255),
   book_id varchar(255) NOT NULL,
@@ -106,4 +105,3 @@ CREATE TABLE borrowing
   FOREIGN KEY (book_ID) REFERENCES copy_of_book(book_ID),
   FOREIGN KEY (email) REFERENCES subscriber(email)
 );
-
