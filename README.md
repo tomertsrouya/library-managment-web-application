@@ -3,4 +3,4 @@ Web application for library managementWeb application for library management, In
 
 TODO:
 - Go to get_book_info and add your google api-key.
-- Go to db_conection and ad your mysql db info.
+- Go to db_conection and add your mysql db info.
