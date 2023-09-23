@@ -1,7 +1,7 @@
 import requests
 
 
-def get_book_cover(title, api_key='AIzaSyC3JbIbLqZRw-zhRSF6aW5t9ihWZdyQEj8'):
+def get_book_cover(title, api_key='your-api-key'):
     # Set the base URL
     base_url = 'https://www.googleapis.com/books/v1/volumes'
 
