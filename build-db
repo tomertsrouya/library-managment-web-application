@@ -1,0 +1,109 @@
+;
+create schema library;
+use library;
+
+CREATE TABLE subscriber
+(
+  email VARCHAR(255) NOT NULL,
+  first_name VARCHAR(255),
+  last_name VARCHAR(255),
+  city VARCHAR(255),
+  street VARCHAR(255),
+  house_num VARCHAR(255) ,
+  phone_num VARCHAR(255) ,
+  date_of_birth DATE ,
+  subscriber_password VARCHAR(255),
+  quantity_of_borrowed_books INT,
+  PRIMARY KEY (email)
+);
+
+CREATE TABLE branch
+(
+  branch_name VARCHAR(255) NOT NULL,
+  branch_phone_num VARCHAR(255),
+  city VARCHAR(255),
+  street VARCHAR(255),
+  house_num VARCHAR(255),
+  PRIMARY KEY (branch_name)
+);
+
+CREATE TABLE librarian
+(
+  email VARCHAR(255) NOT NULL,
+  phone_num VARCHAR(255) ,
+  date_of_beginning_working DATE,
+  city VARCHAR(255),
+  street VARCHAR(255),
+  house_num VARCHAR(255),
+  first_name VARCHAR(255),
+  last_name VARCHAR(255),
+  branch_name VARCHAR(255),
+  librarian_password varchar(255),
+  PRIMARY KEY (email),
+  FOREIGN KEY (branch_name) REFERENCES branch(branch_name)
+);
+
+CREATE TABLE book
+(
+  book_name  VARCHAR(255) NOT NULL,
+  author_name VARCHAR(255) NOT NULL,
+  year_of_publish VARCHAR(255),
+  name_of_publisher VARCHAR(255),
+  arrival_date varchar(255),
+  cover_photo varchar(255),
+  book_description varchar(255),
+  PRIMARY KEY (book_name,author_name)
+);
+
+CREATE TABLE copy_of_book
+(
+  book_ID VARCHAR(255) NOT NULL,
+  copy_of_book_status  SET('borrowed', 'ordered', 'available') DEFAULT 'available', 
+  author_name VARCHAR(255),
+  book_name varchar(255),
+  branch_name varchar(255),
+  PRIMARY KEY (book_ID),
+  FOREIGN KEY (book_name) REFERENCES book(book_name),
+  FOREIGN KEY (branch_name) REFERENCES branch(branch_name)
+);
+
+CREATE TABLE book_order
+(
+  date_of_order DATE NOT NULL,
+  order_status VARCHAR(255) ,
+  email VARCHAR(255),
+  estimated_arrival_date varchar(255),
+  book_id varchar(255) NOT NULL,
+  branch_name varchar(255) ,
+  PRIMARY KEY (date_of_order,book_id),
+  FOREIGN KEY (email) REFERENCES subscriber(email),
+  FOREIGN KEY (branch_name) REFERENCES branch(branch_name),
+  FOREIGN KEY (book_id) REFERENCES copy_of_book(book_id)
+);
+
+CREATE INDEX idx_author_name ON book (author_name);
+
+CREATE TABLE books_in_branches
+(
+  stock_in_branch INT,
+  branch_name VARCHAR(255) NOT NULL,
+  author_name VARCHAR(255) NOT NULL,
+  book_name varchar(255) not null, 
+  PRIMARY KEY (branch_name, author_name, book_name),
+  FOREIGN KEY (branch_name) REFERENCES branch(branch_name),
+  FOREIGN KEY (author_name) REFERENCES book(author_name),
+  FOREIGN KEY (book_name) REFERENCES book(book_name)
+);
+
+CREATE TABLE borrowing
+(
+  date_of_borrowing Date NOT NULL,
+  book_id varchar(255) not null,
+  date_of_return Date ,
+  extension_date_of_taking date ,
+  email varchar(255) not null,
+  PRIMARY KEY (date_of_borrowing, book_id, email),
+  FOREIGN KEY (book_ID) REFERENCES copy_of_book(book_ID),
+  FOREIGN KEY (email) REFERENCES subscriber(email)
+);
+
