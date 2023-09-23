@@ -11,10 +11,10 @@ def db_connector(db_name):
     # Creating an instance of the MySQL class
     mysql = MySQL()
     # Setting up configurations to form the connection:
-    app.config['MYSQL_DATABASE_HOST'] = '127.0.0.1'  #host
-    app.config['MYSQL_DATABASE_USER'] = 'root'  #username
-    app.config['MYSQL_DATABASE_PASSWORD'] = 'root' #password
-    app.config['MYSQL_DATABASE_DB'] = 'group31_db' #database name
+    app.config['MYSQL_DATABASE_HOST'] = 'your -host'  #host
+    app.config['MYSQL_DATABASE_USER'] = 'your-username'  #username
+    app.config['MYSQL_DATABASE_PASSWORD'] = 'your-password' #password
+    app.config['MYSQL_DATABASE_DB'] = 'your-db' #database name
     # Initializing the app:
     mysql.init_app(app)
     # Connect to the database
